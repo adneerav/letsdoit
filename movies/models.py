@@ -25,6 +25,10 @@ CONTENT_TYPE = (
 class Genre(models.Model):
     name = models.CharField(max_length=50, blank=False, null=False, verbose_name=_('genre'))
 
+    '''
+    To display data in admin panel listing with name.
+    Not like Object(1),Object(2).
+    '''
     def __str__(self):
         return self.name
 
