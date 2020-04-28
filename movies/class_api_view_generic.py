@@ -1,11 +1,7 @@
 # Create your views here.
-from django.http import HttpResponse
-from rest_framework import status, generics, mixins
-from rest_framework.authentication import SessionAuthentication, BasicAuthentication
-from rest_framework.decorators import api_view
+from django_expiring_token.authentication import ExpiringTokenAuthentication
+from rest_framework import generics, mixins
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
-from rest_framework.views import APIView
 
 from movies.models import Genre
 from movies.serializers import GenreSerializer
@@ -18,10 +14,18 @@ class GenreGenericAPIView(generics.GenericAPIView, mixins.ListModelMixin, mixins
     lookup_field = 'id'
     '''
     list of authentication to be applied for the api.
-    BasicAuthentication will ask BasicAutorization in api call.
+    BasicAuthentication will ask BasicAuthorization in api call.
     Authentication types must be assigned to authentication_classes        
     '''
-    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    # authentication_classes = [SessionAuthentication, BasicAuthentication]
+
+    authentication_classes = [ExpiringTokenAuthentication]
+    '''
+    For the token base authorization its required to add rest_framework.authtoken in
+    install app settings.py.
+    This is token base call
+    '''
+
     permission_classes = [IsAuthenticated]
 
     def get(self, request, id=None):
@@ -30,7 +34,7 @@ class GenreGenericAPIView(generics.GenericAPIView, mixins.ListModelMixin, mixins
         else:
             return self.list(request)
 
-    def post(self, request):
+    def post(self, request, id=None):
         return self.create(request)
 
     def put(self, request, id=None):

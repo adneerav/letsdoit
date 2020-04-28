@@ -2,6 +2,7 @@ Django==2.2.12
 django-admin==2.0.1
 django-excel-base==1.0.4
 django-excel-response2==3.0.2
+django-expiring-token==1.0.2
 django-six==1.0.4
 djangorestframework==3.11.0
 mysqlclient==1.4.6
