@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+from datetime import timedelta
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
@@ -37,9 +39,18 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_api.apps.RestApiConfig',
-    'movies.apps.MoviesConfig'
-]
+    'movies.apps.MoviesConfig',
+    # 'rest_framework.authtoken',  # this is required add token base authentication
+    'django_expiring_token',  # this is custom expiration token package from
+    # https://pypi.org/project/django-expiring-token/
 
+]
+EXPIRING_TOKEN_DURATION = timedelta(minutes=5)
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'django_expiring_token.authentication.ExpiringTokenAuthentication',
+    ),
+}
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -125,5 +136,3 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-
