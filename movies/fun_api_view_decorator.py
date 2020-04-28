@@ -42,7 +42,7 @@ def genre_detail(request, pk):
         for the given query parameters.
         https://docs.djangoproject.com/en/3.0/ref/models/instances/#django.db.models.Model.DoesNotExist
         '''
-        return HttpResponse(status=status.HTTP_404_NOT_FOUND)
+        return Response(status=status.HTTP_404_NOT_FOUND)
     if request.method == 'GET':
         serializer = GenreSerializer(genre)
         return Response(serializer.data)
@@ -54,4 +54,4 @@ def genre_detail(request, pk):
         return Response(status=status.HTTP_400_BAD_REQUEST)
     elif request.method == 'DELETE':
         genre = genre.delete()
-        return HttpResponse(status=status.HTTP_204_NO_CONTENT)
+        return Response(status=status.HTTP_204_NO_CONTENT)
