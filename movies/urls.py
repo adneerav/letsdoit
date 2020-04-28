@@ -1,10 +1,7 @@
-from django.conf.urls import url
 from django.urls import path
 
-from . import views, fun_api_view_decorator
-
 # from .views import GenreAPI
-from .class_api_view import GenreAPIView, GenreDetailAPIView
+from .class_api_view import GenreDetailAPIView
 from .class_api_view_generic import GenreGenericAPIView
 
 urlpatterns = [

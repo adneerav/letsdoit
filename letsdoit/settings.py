@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_api.apps.RestApiConfig',
-    'user_accounts.apps.UserAccountsConfig',
     'movies.apps.MoviesConfig'
 ]
 
@@ -127,4 +126,4 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-AUTH_USER_MODEL = 'user_accounts.User'
+
