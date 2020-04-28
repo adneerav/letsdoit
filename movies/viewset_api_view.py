@@ -57,10 +57,12 @@ class GenreViewSet(viewsets.ViewSet):
             "message": "Genre Deleted."
         }, status=status.HTTP_204_NO_CONTENT)
 
+
 '''
 Below view set is clone of above one.
 Added to check the multiple view set in API Root
 '''
+
 
 class GenreSecondViewSet(viewsets.ViewSet):
     def list(self, request):
