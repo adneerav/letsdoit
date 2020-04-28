@@ -40,17 +40,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_api.apps.RestApiConfig',
     'movies.apps.MoviesConfig',
-    # 'rest_framework.authtoken',  # this is required add token base authentication
-    'django_expiring_token',  # this is custom expiration token package from
-    # https://pypi.org/project/django-expiring-token/
-
 ]
-EXPIRING_TOKEN_DURATION = timedelta(minutes=5)
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'django_expiring_token.authentication.ExpiringTokenAuthentication',
-    ),
-}
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

@@ -1,22 +1,15 @@
-from django.conf.urls import url
-from django.urls import path
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
 
-# from .views import GenreAPI
-from rest_framework.authtoken import views
+from .viewset_api_view import GenreViewSet, GenreSecondViewSet
 
-from .auth_token_view import AuthTokenAPIView
-from .class_api_view import GenreDetailAPIView
-from .class_api_view_generic import GenreGenericAPIView
+router = DefaultRouter()
+router.register('genre', GenreViewSet, basename='genre')
+'''
+Below register viewset in router to test multiple api viewset in api root
+'''
+router.register('genre_clone', GenreSecondViewSet, basename='clone')
 
 urlpatterns = [
-    # url(r'^content/?$', ContentAPI.as_view()),
-
-    # url(r'^genre/?$', fun_api_view_decorator.genre_list), # for function base api view
-    # path('detail/<int:pk>/', fun_api_view_decorator.genre_detail) # for function base api view
-
-    # url(r'^genre/?$', GenreAPIView.as_view()),  # for class base api view
-    path('detail/<int:id>/', GenreDetailAPIView.as_view()),  # for class base api view
-    path('genre/gendetail/<int:id>/', GenreGenericAPIView.as_view()),
-    path('api-token-auth/', AuthTokenAPIView.as_view()),
-
+    path('', include(router.urls)),
 ]
