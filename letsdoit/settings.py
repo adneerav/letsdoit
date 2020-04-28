@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_api.apps.RestApiConfig',
     'user_accounts.apps.UserAccountsConfig',
-    'movies.apps.MoviesConfig'
+    'movies.apps.MoviesConfig',
 ]
 
 MIDDLEWARE = [
