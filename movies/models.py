@@ -1,3 +1,5 @@
+from django.utils.timezone import now
+
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -24,11 +26,13 @@ CONTENT_TYPE = (
 
 class Genre(models.Model):
     name = models.CharField(max_length=50, blank=False, null=False, verbose_name=_('genre'))
+    added_date = models.DateTimeField(auto_now_add=True, editable=False)
 
     '''
     To display data in admin panel listing with name.
     Not like Object(1),Object(2).
     '''
+
     def __str__(self):
         return self.name
 
@@ -36,12 +40,13 @@ class Genre(models.Model):
 class Content(models.Model):
     name = models.CharField(max_length=150)
     plot = models.CharField(max_length=500)
+    date_of_release = models.DateTimeField(blank=True, null=True)
+    added_date = models.DateTimeField(auto_now_add=True, editable=False)
     type = models.CharField(choices=CONTENT_TYPE, verbose_name='content type', max_length=25)
     genres = models.ManyToManyField(Genre, related_name='contents', related_query_name='content')
 
-    class Meta:
-        verbose_name = _('content')
-        verbose_name_plural = _('contents')
+    def __str__(self):
+        return self.name
 
 
 class ContentImage(models.Model):
@@ -50,7 +55,4 @@ class ContentImage(models.Model):
     type = models.CharField(verbose_name='image type', max_length=25, null=False, blank=False)
     content = models.ForeignKey(Content, on_delete=models.CASCADE, related_name='images',
                                 related_query_name='image')
-
-    class Meta:
-        verbose_name = _('contentimage')
-        verbose_name_plural = _('contentimages')
+    added_date = models.DateTimeField(auto_now_add=True, editable=False)
