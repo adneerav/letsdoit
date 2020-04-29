@@ -1,7 +1,9 @@
 # Create your views here.
 from django.http import HttpResponse
 from rest_framework import status
-from rest_framework.decorators import api_view
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from movies.models import Genre
@@ -13,10 +15,21 @@ function based decorator api_view have receive instance of Request
 
 if api_view() does not have any specified method , it will take GET as 
 default & for the rest request it will give 405 error
+
+
+Regarding AUTHENTICATION
+
+authentication_classes & permission_classes both MUST be after api_view decorator.
+API authentication will not work if not in below order.
+api_view
+authentication_classes
+permission_classes
 '''
 
 
 @api_view(['GET', 'POST'])
+@authentication_classes([SessionAuthentication, BasicAuthentication])
+@permission_classes([IsAuthenticated])
 def genre_list(request):
     if request.method == 'GET':
         genres = Genre.objects.all()
@@ -30,7 +43,18 @@ def genre_list(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+'''
+authentication_classes & permission_classes both MUST be after api_view decorator.
+API authentication will not work if not in below order.
+api_view
+authentication_classes
+permission_classes
+'''
+
+
 @api_view(['GET', 'PUT', 'DELETE'])
+@authentication_classes([SessionAuthentication, BasicAuthentication])
+@permission_classes([IsAuthenticated])
 def genre_detail(request, pk):
     try:
         genre = Genre.objects.get(pk=pk)

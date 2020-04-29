@@ -1,20 +1,9 @@
 DRF
-   
+**authentication branch**
 
-Function based apiview example
-
-#Point notes
-    What is many = True ?
-    What is safe ?
-    What is DoesNotExist ?
-
-#GenreSerializer class
-    Meta class required to define fields.
-    In this example only fields property added
-
-
-**api_view_decorator branch**
-
+Added authentication in two ways 
+   1. Authentication with class base view(`class_api_view_generic.py`)
+   2. Function base api view decorator.(`fun_api_view_decorator.py`) 
 
 **Function base decorator api**
 
@@ -24,6 +13,8 @@ Django's default api form view.
 **key point learned & added**
    1. `fields` , `exclude` related in serializer meta(Ref class GenreSerializer[movies/serializers.py])
    2. Used `__str__` override function in model to display name in admin panel instead object(1),Object(2)
+   3. In Function base API View decorator authentication_classes & api_view decorator should be in order as
+   mentioned in comment of `fun_api_view_decorator.py`
    
 
 **authentication branch**
