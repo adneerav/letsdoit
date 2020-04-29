@@ -3,13 +3,6 @@ from rest_framework import serializers
 from movies.models import Content, Genre
 
 
-class ContentSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Content
-        fields = ('id', 'name', 'plot', 'type', 'added_date')
-        depth = 1
-
-
 class GenreSerializer(serializers.ModelSerializer):
     class Meta:
         model = Genre
@@ -25,3 +18,11 @@ class GenreSerializer(serializers.ModelSerializer):
         But to use exclude fields should be declared(used)
         either fields or exclude
         '''
+
+
+class ContentSerializer(serializers.ModelSerializer):
+    genre_list = GenreSerializer
+
+    class Meta:
+        model = Content
+        fields = ('id', 'name', 'plot', 'genres', 'type', 'added_date')
