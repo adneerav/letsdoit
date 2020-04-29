@@ -18,7 +18,7 @@ https://docs.djangoproject.com/en/3.0/ref/csrf/#django.views.decorators.csrf.csr
 
 
 @csrf_exempt
-def article_list(request):
+def genre_list(request):
     if request.method == 'GET':
         genres = Genre.objects.all()
         serializer = GenreSerializer(genres, many=True)
