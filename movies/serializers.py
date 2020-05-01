@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from movies.models import Content, Genre
+from movies.models import Content, Genre, ContentImage
 
 
 class GenreSerializer(serializers.ModelSerializer):
@@ -21,7 +21,9 @@ class GenreSerializer(serializers.ModelSerializer):
 
 
 class ContentSerializer(serializers.ModelSerializer):
-    genre_list = GenreSerializer
+    """
+    To add genres related listing and to post data with genre.
+    """
 
     class Meta:
         model = Content

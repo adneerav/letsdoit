@@ -8,9 +8,9 @@ THUMB = 'THUMB',
 LARGE = 'LARGE',
 BANNER = 'BANNER'
 IMAGE_TYPE = (
-    (THUMB, _('Thumb')),
-    (LARGE, _('Large')),
-    (BANNER, _('Banner')),
+    ('THUMB', _('Thumb')),
+    ('LARGE', _('Large')),
+    ('BANNER', _('Banner')),
 )
 
 MOVIE = 'Movie',
@@ -36,6 +36,12 @@ class Genre(models.Model):
     def __str__(self):
         return self.name
 
+    def __unicode__(self):
+        return self.name
+
+    def get_name(self):
+        return self.name
+
 
 class Content(models.Model):
     name = models.CharField(max_length=150)
@@ -49,10 +55,23 @@ class Content(models.Model):
         return self.name
 
 
+
 class ContentImage(models.Model):
     thumb = models.ImageField(upload_to='uploads/content/thumb/', db_column='thumb_image',
                               blank=True, null=True, verbose_name=_('thumb image'))
-    type = models.CharField(verbose_name='image type', max_length=25, null=False, blank=False)
+    type = models.CharField(choices=IMAGE_TYPE, verbose_name='image type', max_length=25, null=False, blank=False)
     content = models.ForeignKey(Content, on_delete=models.CASCADE, related_name='images',
                                 related_query_name='image')
     added_date = models.DateTimeField(auto_now_add=True, editable=False)
+
+    @property
+    def content_name(self):
+        return self.content.name
+
+    @property
+    def image_url(self):
+        return self.image_url
+
+    @property
+    def image_type(self):
+        return self.type
