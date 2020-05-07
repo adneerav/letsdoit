@@ -5,8 +5,11 @@ django-excel-response2==3.0.2
 django-expiring-token==1.0.2
 django-six==1.0.4
 djangorestframework==3.11.0
+djangorestframework-simplejwt==4.3.0
 mysqlclient==1.4.6
 Pillow==7.1.1
+psycopg2==2.8.5
+PyJWT==1.7.1
 pytz==2019.3
 screen==1.0.1
 sqlparse==0.3.1

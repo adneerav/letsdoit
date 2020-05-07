@@ -1,22 +1,28 @@
 from django.conf.urls import url
 from django.urls import path
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
-# from .views import GenreAPI
-from rest_framework.authtoken import views
+from movies.content_api import ContentAPIView, ContentListView
 
-from .auth_token_view import AuthTokenAPIView
-from .class_api_view import GenreDetailAPIView
-from .class_api_view_generic import GenreGenericAPIView
+from movies.content_image_api import ContentImageAPIView
+from movies.genre_api import GenreDetail, GenreAPI
 
 urlpatterns = [
-    # url(r'^content/?$', ContentAPI.as_view()),
+    url(r'^genre/?$', GenreAPI.as_view()),  # genre list get & post api
+    path('genre/<int:id>/', GenreDetail.as_view()),  # genre id wise get ,put & delete api
+    path('content/<int:id>/', ContentAPIView.as_view()),
+    path('contents/', ContentListView.as_view({'get': 'list'})),
+    path('content/<int:content_id>/images/', ContentImageAPIView.as_view({
+        'get': 'list',
+        'post': 'create',
+    })),
+    path('content/image/<int:id>/', ContentImageAPIView.as_view({
+        'get': 'retrieve',
+        'delete': 'destroy',
+        'put': 'update',
+    })),
 
-    # url(r'^genre/?$', fun_api_view_decorator.genre_list), # for function base api view
-    # path('detail/<int:pk>/', fun_api_view_decorator.genre_detail) # for function base api view
-
-    # url(r'^genre/?$', GenreAPIView.as_view()),  # for class base api view
-    path('detail/<int:id>/', GenreDetailAPIView.as_view()),  # for class base api view
-    path('genre/gendetail/<int:id>/', GenreGenericAPIView.as_view()),
-    path('api-token-auth/', AuthTokenAPIView.as_view()),
+    url(r'^auth/jwt/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    url(r'^auth/jwt/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 
 ]

@@ -9,9 +9,7 @@ https://docs.djangoproject.com/en/2.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
-
 import os
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 from datetime import timedelta
 
@@ -45,12 +43,34 @@ INSTALLED_APPS = [
     # https://pypi.org/project/django-expiring-token/
 
 ]
-EXPIRING_TOKEN_DURATION = timedelta(minutes=5)
+# EXPIRING_TOKEN_DURATION = timedelta(minutes=5)
+
+"""
+DEFAULT_AUTHENTICATION_CLASSES >>> 
+How authentication system should works
+SessionAuthentication >> logged in with username/password & session base,
+BaseAuthentication >> Basic authorization,
+Jwt token base authentication
+oAUTH
+etc...
+"""
+
+"""
+DEFAULT_PERMISSION_CLASSES >>>> 
+This will allow to give permission like
+login is required >>> IsAuthenticated
+read only permission >> IsAuthenticatedOrReadOnly
+"""
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'django_expiring_token.authentication.ExpiringTokenAuthentication',
-    ),
+
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        # 'rest_framework_simplejwt.authentication.JWTAuthentication'
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        # 'rest_framework.permissions.IsAuthenticated',
+    ]
 }
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -136,3 +156,13 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+"""
+For jwt token reference taken from 
+https://django-rest-framework-simplejwt.readthedocs.io/en/latest/
+"""
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(seconds=20),
+    'REFRESH_TOKEN_LIFETIME': timedelta(minutes=1),
+}

@@ -56,3 +56,6 @@ class ContentImage(models.Model):
     content = models.ForeignKey(Content, on_delete=models.CASCADE, related_name='images',
                                 related_query_name='image')
     added_date = models.DateTimeField(auto_now_add=True, editable=False)
+
+    def __str__(self):
+        return self.content.name
