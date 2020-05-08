@@ -2,6 +2,7 @@ from django.http import Http404
 from rest_framework import generics, mixins, viewsets, status
 from rest_framework.exceptions import APIException
 from rest_framework.generics import get_object_or_404
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 
 from movies.common_response import CommonResponse
@@ -9,9 +10,16 @@ from movies.models import ContentImage, Content
 from movies.serializers import ContentImageSerializer
 
 
+class StandardResultsSetPagination(PageNumberPagination):
+    page_size = 2
+    page_size_query_param = 'page_size'
+    max_page_size = 1000
+
+
 class ContentImageAPIView(viewsets.ModelViewSet):
     serializer_class = ContentImageSerializer
     lookup_field = "id"
+    pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
         images = ContentImage.objects.all()

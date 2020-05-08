@@ -25,14 +25,6 @@ class GenreSerializer(serializers.ModelSerializer):
         '''
 
 
-class ContentSerializer(serializers.ModelSerializer):
-    genres = GenreSerializer
-
-    class Meta:
-        model = Content
-        fields = ['id', 'name', 'plot', 'genres', 'type', 'added_date']
-
-
 class ContentImageSerializer(serializers.ModelSerializer):
     content_image = ContentImage
     thumb = serializers.SerializerMethodField()
@@ -43,5 +35,24 @@ class ContentImageSerializer(serializers.ModelSerializer):
 
     def get_thumb(self, content_image):
         request = self.context.get('request')
+        if request is None:
+            return content_image.thumb.url
         photo_url = content_image.thumb
         return request.build_absolute_uri(photo_url.url)
+
+
+class ContentSerializer(serializers.ModelSerializer):
+    genres = GenreSerializer
+    images = ContentImageSerializer(read_only=True, many=True)
+
+    class Meta:
+        model = Content
+        fields = ['id', 'name', 'plot', 'genres', 'images', 'type', 'added_date']
+        extra_kwargs = {
+            "name": {
+                "error_messages": {
+                    "required": "name required.",
+                    "blank": "name can not be blank."
+                }
+            }
+        }

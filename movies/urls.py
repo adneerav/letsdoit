@@ -11,7 +11,10 @@ urlpatterns = [
     url(r'^genre/?$', GenreAPI.as_view()),  # genre list get & post api
     path('genre/<int:id>/', GenreDetail.as_view()),  # genre id wise get ,put & delete api
     path('content/<int:id>/', ContentAPIView.as_view()),
-    path('contents/', ContentListView.as_view({'get': 'list'})),
+    path('contents/', ContentListView.as_view({
+        'get': 'list',
+        'post': 'create'
+    })),
     path('content/<int:content_id>/images/', ContentImageAPIView.as_view({
         'get': 'list',
         'post': 'create',

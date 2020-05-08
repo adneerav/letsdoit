@@ -43,3 +43,15 @@ class `GenreGenericAPIView`
         2. `DEFAULT_AUTHENTICATION_CLASSES` in `REST_FRAMEWORK` of settings.py
         3. expiration default duration in `settings.py` `EXPIRING_TOKEN_DURATION = timedelta(minutes=5)` 
    
+
+**crudel_operation**
+    
+    Override default modelviewset method for the api
+    
+    pagination added
+     
+    Changing default error message for blank and null field related
+
+https://docs.google.com/document/d/1o8d0A0Hwf54Vjkv6AD1pq2Q2iYWOgpfzcCiaOIMbiPA/edit?usp=sharing
+    
+    
