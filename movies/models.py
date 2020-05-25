@@ -53,8 +53,8 @@ class ContentImage(models.Model):
     thumb = models.ImageField(upload_to='uploads/content/thumb/', db_column='thumb_image',
                               blank=True, null=True, verbose_name=_('thumb image'))
     type = models.CharField(verbose_name='image type', max_length=25, null=False, blank=False)
-    content = models.ForeignKey(Content, on_delete=models.CASCADE, related_name='images',
-                                related_query_name='image')
+    content = models.ForeignKey(Content, on_delete=models.CASCADE, related_name='content_images',
+                                related_query_name='content_image')
     added_date = models.DateTimeField(auto_now_add=True, editable=False)
 
     def __str__(self):
